@@ -20,6 +20,8 @@ import parsers
 import patchdatabase
 import utils
 
+import dc_inserter
+
 if TYPE_CHECKING:
     from patchdatabase import PatchDB
 
@@ -183,6 +185,10 @@ class CSmithCaseGenerator:
             self.try_counter += 1
             logging.debug("Generating new candidate...")
             marker_prefix, candidate_code = generate_file(self.config, "")
+            ###################################
+            # TODO: Insert the Extension here #
+            ###################################
+            dc_inserter.entrance(candidate_code)
 
             # Find alive markers
             logging.debug("Getting alive markers...")
