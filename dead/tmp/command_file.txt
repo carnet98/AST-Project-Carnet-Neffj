@@ -34,3 +34,11 @@ break DCEMarker32_
 break DCEMarker33_
 break DCEMarker34_
 break DCEMarker35_
+set logging file gdb_log.txt
+set logging on
+r
+while 1
+s
+info locals
+continue
+end
