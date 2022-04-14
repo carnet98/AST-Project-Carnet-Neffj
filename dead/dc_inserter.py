@@ -2,6 +2,8 @@
 
 import os
 
+
+
 # take code. transform to compile ready. keep track of DCEMarkers
 # PRECONDITION: The markers are numbered continuously
 def precompute(candidate_code):
@@ -38,10 +40,36 @@ def run_gdb():
 
 
 def eval_log():
-    print("EVALUTATE LOG FILE")
-    log_file = open("tmp/gdb_log.txt", "r")
-    log = log_file.read()
-    log_file.close()
+    print("START: EVALUTATE LOG FILE")
+    curr_break = ""
+    var_vals = {}
+    with open("tmp/gdb_log.txt", "r") as log_file:
+        # iterate through each line in the log file
+        for line in log_file:
+            stripped_line = line.strip()
+            # split lines into list of tokens
+            tokens = stripped_line.split()
+
+            # catch breakpoint and update the current active marker
+            if (len(tokens) > 0 and tokens[0] == "Breakpoint"):
+                curr_break = tokens[2]
+                if not (curr_break in var_vals):
+                    var_vals[curr_break] = {}
+
+            # catch variable values
+            if(len(tokens) > 0 and tokens[1] == "="):
+                var = tokens[0]
+                val = tokens[2]
+                # add new variable to dictionary
+                if not (var in var_vals[curr_break]):
+                    var_vals[curr_break][var] = []
+                # bring value to int format
+                val = int(val, 0)
+                if not (val in var_vals[curr_break][var]):
+                    var_vals[curr_break][var].append(val)
+                
+    print(var_vals)
+    print("END: EVALUATED LOG FILE")
     
     
 
