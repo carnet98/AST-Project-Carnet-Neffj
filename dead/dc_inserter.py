@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import os
+import random
 
 
 
@@ -68,8 +69,30 @@ def eval_log():
                 if not (val in var_vals[curr_break][var]):
                     var_vals[curr_break][var].append(val)
                 
-    print(var_vals)
     print("END: EVALUATED LOG FILE")
+    return var_vals
+    
+def unsatConditionGenerator(var_vals):
+    print("GENERATE UNSATISFIABLE CONDITION WITH HELP OF VARIABLE VALUES")
+    conditions = {}
+    # iterate through markers; create a condition for a new marker
+    for marker, variables in var_vals.items():
+        conditions[marker] = ""
+        # iterate through variables of the marker
+        for var, vals in variables.items():
+            # generate random value
+            new_var = random.randint(0, 2147483647)
+            # check if variable obtains value during runtime
+            if not (new_var in vals):
+                # check if it is the first variable and create condition string
+                if conditions[marker] == "":
+                    conditions[marker] = str(new_var) + " == " + var
+                else:
+                    conditions[marker] = conditions[marker] + " && " + str(new_var) + " == " + var
+
+    print("CONDITION GENERATED")
+    # return generated conditions
+    return conditions
     
     
 
@@ -82,7 +105,8 @@ def entrance(candidate_code):
     program_txt.close()
     precompute(candidate_code)
     run_gdb()
-    eval_log()
+    var_vals = eval_log()
+    condition = unsatConditionGenerator(var_vals)
 
 # enter program standalone
 def main():
@@ -91,7 +115,8 @@ def main():
     text_file.close()
     precompute(candidate_code)
     run_gdb()
-    eval_log()
+    var_vals = eval_log()
+    condition = unsatConditionGenerator(var_vals)
 
 if __name__ == "__main__":
     main()
