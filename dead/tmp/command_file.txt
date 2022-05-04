@@ -40,5 +40,19 @@ r
 while 1
 s
 info locals
+print g_31
+print g_61
+print g_119
+print g_141
+print g_192
+print g_196
+print g_259
+print g_311
+print g_338
+print g_386
+print g_388
+print g_426
+print g_507
+print g_562
 continue
 end
