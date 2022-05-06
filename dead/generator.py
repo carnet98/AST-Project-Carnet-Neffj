@@ -188,7 +188,6 @@ class CSmithCaseGenerator:
             ###################################
             # TODO: Insert the Extension here #
             ###################################
-            dc_inserter.entrance(candidate_code)
 
             # Find alive markers
             logging.debug("Getting alive markers...")
