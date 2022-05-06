@@ -10015,6 +10015,6 @@ $1943 = 26796
 $1944 = 0 '\000'
 $1945 = 3051858100
 $1946 = 48967
-[Inferior 1 (process 175305) exited normally]
+[Inferior 1 (process 728) exited normally]
 command_file.txt:58: Error in sourced command file:
 The program is not being run.

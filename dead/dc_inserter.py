@@ -136,7 +136,7 @@ def unsatConditionGenerator(var_vals):
                 if conditions[marker] == "":
                     conditions[marker] = str(new_var) + " == " + var
                 else:
-                    conditions[marker] = conditions[marker] + " && " + str(new_var) + " == " + var
+                    conditions[marker] = conditions[marker] + " || " + str(new_var) + " == " + var
 
     print("CONDITION GENERATED")
     # return generated conditions
