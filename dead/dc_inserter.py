@@ -112,9 +112,14 @@ def eval_log(global_variables):
                 if not (var in var_vals[curr_break]):
                     var_vals[curr_break][var] = []
                 # bring value to int format
-                val = int(val, 0)
-                if not (val in var_vals[curr_break][var]):
-                    var_vals[curr_break][var].append(val)
+                try:
+                    val = int(val, 0)
+                    if not (val in var_vals[curr_break][var]):
+                        var_vals[curr_break][var].append(val)
+                    break
+                except ValueError:
+                    print("VALUE ERROR")
+                
                 
     print("END: EVALUATED LOG FILE")
     return var_vals
@@ -166,9 +171,7 @@ def entrance(candidate_code):
     var_vals = eval_log(global_variables)
     conditions = unsatConditionGenerator(var_vals)
     new_candidate = instrument_code(conditions, candidate_code)
-    new_program_txt = open('tmp/candidate_new.txt', 'w+')
-    new_program_txt.write(new_candidate)
-    new_program_txt.close()
+    return new_candidate
 
 
 # enter program standalone
