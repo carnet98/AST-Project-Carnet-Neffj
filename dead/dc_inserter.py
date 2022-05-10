@@ -4,6 +4,7 @@ import os
 import random
 
 # variable ranges:
+'''
 uint8_range = {'min': 0, 'max': 255}
 int8_range = {'min': -128, 'max': 127}
 uint16_range = {'min': 0, 'max': 65535}
@@ -13,6 +14,7 @@ int32_range = {'min': -2147483648, 'max': 2147483647}
 uint64_range = {'min': 0, 'max': 18446744073709551615}
 int64_range = {'min': -9223372036854775808, 'max': 9223372036854775807}
 ranges = [int8_range, uint8_range, int16_range, uint16_range, int32_range, uint32_range, int64_range, uint64_range]
+'''
 
 max_vals = [127, 255, 32767, 65535, 2147483647, 4294967295, 9223372036854775807, 18446744073709551615]
 min_vals = [0, -128, -32768, -2147483648, -9223372036854775808]
@@ -30,11 +32,11 @@ def get_range(min_val, max_val):
 # get a list of all global variables and generate GDB commands to get values
 def get_global(candidate_code):
     print("GET GLOBAL VARIABLE INFO")
-    test = iter(candidate_code.splitlines())
+    code = iter(candidate_code.splitlines())
     line_counter = 0
     global_definitions = False
     global_variables = []
-    for code_line in test:
+    for code_line in code:
         # start global variable definitions
         if(code_line == "/* --- GLOBAL VARIABLES --- */"):
             global_definitions = True
@@ -56,6 +58,27 @@ def get_global(candidate_code):
     for var in global_variables:
         gdb_global = gdb_global + "\nprint " + var
     return gdb_global, global_variables
+
+# sets local variable declarations to avoid first usage in the if-statement
+def set_locals(local_var_list, candidate_code):
+    print("SET LOCAL VARIABLE DECLARATIONS")
+    # prepare local variable declarations
+    local_decl = ""
+    for var in local_var_list:
+        local_decl = local_decl + "int " + var + ";\n"
+    # iterate through each code line
+    code = iter(candidate_code.splitlines())
+    new_candidate = ""
+    for code_line in code:
+        # start of global variable definitions
+        if(code_line == "/* --- GLOBAL VARIABLES --- */"):
+            # set local variable declarations
+            new_candidate = new_candidate + "\n/* --- LOCAL VARIABLE DECLARATIONS --- */\n" + local_decl + code_line + "\n"
+        else:
+            # add normal code lines
+            new_candidate = new_candidate + code_line + "\n"
+
+    return(new_candidate)
             
 
 
@@ -107,6 +130,7 @@ def eval_log(global_variables):
     global_count = len(global_variables)
     curr_break = ""
     var_vals = {}
+    local_var_list = []
     
     with open("tmp/gdb_log.txt", "r") as log_file:
         # iterate through each line in the log file
@@ -130,6 +154,8 @@ def eval_log(global_variables):
                     global_number = var[1:]
                     global_number = (int(global_number) - 1) % global_count
                     var = global_variables[global_number]
+                elif not (var in local_var_list):
+                    local_var_list.append(var)
                 
                 # add new variable to dictionary
                 if not (var in var_vals[curr_break]):
@@ -144,7 +170,7 @@ def eval_log(global_variables):
                 
                 
     print("END: EVALUATED LOG FILE")
-    return var_vals
+    return var_vals, local_var_list
     
     
 def unsatConditionGenerator(var_vals):
@@ -156,17 +182,18 @@ def unsatConditionGenerator(var_vals):
         # iterate through variables of the marker
         for var, vals in variables.items():
             # generate random value in specific range to fulfill type requirements
-            min_val = min(vals)
-            max_val = max(vals)
-            r = get_range(min_val, max_val)
-            new_var = random.randint(r['min'], r['max'])
-            while(new_var in vals):
+            if not (vals == []):
+                min_val = min(vals)
+                max_val = max(vals)
+                r = get_range(min_val, max_val)
                 new_var = random.randint(r['min'], r['max'])
-            # check if it is the first variable and create condition string
-            if conditions[marker] == "":
-                conditions[marker] = str(new_var) + " == " + var
-            else:
-                conditions[marker] = conditions[marker] + " || " + str(new_var) + " == " + var
+                while(new_var in vals):
+                    new_var = random.randint(r['min'], r['max'])
+                # check if it is the first variable and create condition string
+                if conditions[marker] == "":
+                    conditions[marker] = str(new_var) + " == " + var
+                else:
+                    conditions[marker] = conditions[marker] + " || " + str(new_var) + " == " + var
 
     print("CONDITION GENERATED")
     # return generated conditions
@@ -193,9 +220,10 @@ def entrance(candidate_code):
     program_txt.close()
     global_variables = precompute(candidate_code)
     run_gdb()
-    var_vals = eval_log(global_variables)
+    var_vals, local_var_list = eval_log(global_variables)
     conditions = unsatConditionGenerator(var_vals)
     new_candidate = instrument_code(conditions, candidate_code)
+    new_candidate = set_locals(local_var_list, new_candidate)
     return new_candidate
     
 
@@ -207,11 +235,11 @@ def main():
     text_file.close()
     global_variables = precompute(candidate_code)
     run_gdb()
-    var_vals = eval_log(global_variables)
+    var_vals, local_var_list = eval_log(global_variables)
     conditions = unsatConditionGenerator(var_vals)
     new_candidate = instrument_code(conditions, candidate_code)
+    new_candidate = set_locals(local_var_list, new_candidate)
     global_variables = precompute(new_candidate)
-    print("new program")
     new_program_txt = open('tmp/candidate_new.txt', 'w+')
     new_program_txt.write(new_candidate)
     new_program_txt.close()
