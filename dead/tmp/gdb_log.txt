@@ -1,5 +1,0 @@
-[Thread debugging using libthread_db enabled]
-Using host libthread_db library "/usr/lib/libthread_db.so.1".
-[Inferior 1 (process 333688) exited normally]
-command_file.txt:67: Error in sourced command file:
-The program is not being run.

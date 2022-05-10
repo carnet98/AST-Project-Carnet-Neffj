@@ -3,6 +3,29 @@
 import os
 import random
 
+# variable ranges:
+uint8_range = {'min': 0, 'max': 255}
+int8_range = {'min': -128, 'max': 127}
+uint16_range = {'min': 0, 'max': 65535}
+int16_range = {'min': -32768, 'max': 32767}
+uint32_range = {'min': 0, 'max': 4294967295}
+int32_range = {'min': -2147483648, 'max': 2147483647}
+uint64_range = {'min': 0, 'max': 18446744073709551615}
+int64_range = {'min': -9223372036854775808, 'max': 9223372036854775807}
+ranges = [int8_range, uint8_range, int16_range, uint16_range, int32_range, uint32_range, int64_range, uint64_range]
+
+max_vals = [127, 255, 32767, 65535, 2147483647, 4294967295, 9223372036854775807, 18446744073709551615]
+min_vals = [0, -128, -32768, -2147483648, -9223372036854775808]
+
+def get_range(min_val, max_val):
+    r = {'min': 0, 'max': 127}
+    r['max'] = min([x for x in max_vals if max_val <= x], default=0)
+    r['min'] = max([x for x in min_vals if min_val >= x], default=127)
+    return r
+            
+        
+    
+
 
 # get a list of all global variables and generate GDB commands to get values
 def get_global(candidate_code):
@@ -116,7 +139,6 @@ def eval_log(global_variables):
                     val = int(val, 0)
                     if not (val in var_vals[curr_break][var]):
                         var_vals[curr_break][var].append(val)
-                    break
                 except ValueError:
                     print("VALUE ERROR")
                 
@@ -133,15 +155,18 @@ def unsatConditionGenerator(var_vals):
         conditions[marker] = ""
         # iterate through variables of the marker
         for var, vals in variables.items():
-            # generate random value
-            new_var = random.randint(0, 2147483647)
-            # check if variable obtains value during runtime
-            if not (new_var in vals):
-                # check if it is the first variable and create condition string
-                if conditions[marker] == "":
-                    conditions[marker] = str(new_var) + " == " + var
-                else:
-                    conditions[marker] = conditions[marker] + " || " + str(new_var) + " == " + var
+            # generate random value in specific range to fulfill type requirements
+            min_val = min(vals)
+            max_val = max(vals)
+            r = get_range(min_val, max_val)
+            new_var = random.randint(r['min'], r['max'])
+            while(new_var in vals):
+                new_var = random.randint(r['min'], r['max'])
+            # check if it is the first variable and create condition string
+            if conditions[marker] == "":
+                conditions[marker] = str(new_var) + " == " + var
+            else:
+                conditions[marker] = conditions[marker] + " || " + str(new_var) + " == " + var
 
     print("CONDITION GENERATED")
     # return generated conditions
@@ -172,6 +197,7 @@ def entrance(candidate_code):
     conditions = unsatConditionGenerator(var_vals)
     new_candidate = instrument_code(conditions, candidate_code)
     return new_candidate
+    
 
 
 # enter program standalone
@@ -184,6 +210,8 @@ def main():
     var_vals = eval_log(global_variables)
     conditions = unsatConditionGenerator(var_vals)
     new_candidate = instrument_code(conditions, candidate_code)
+    global_variables = precompute(new_candidate)
+    print("new program")
     new_program_txt = open('tmp/candidate_new.txt', 'w+')
     new_program_txt.write(new_candidate)
     new_program_txt.close()
