@@ -146,7 +146,7 @@ def eval_log(global_variables):
                     var_vals[curr_break] = {}
 
             # catch variable values
-            if(len(tokens) > 0 and tokens[1] == "="):
+            if(len(tokens) > 2 and tokens[1] == "="):
                 var = tokens[0]
                 val = tokens[2]
                 # check if var is a global variable

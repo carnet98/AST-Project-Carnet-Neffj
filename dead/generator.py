@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import json
 import logging
-import os
+import os, os.path
 import signal
 import subprocess
 from multiprocessing import Process, Queue
@@ -21,9 +21,14 @@ import patchdatabase
 import utils
 
 import dc_inserter
+from csv import writer
 
 if TYPE_CHECKING:
     from patchdatabase import PatchDB
+
+# global variables
+case_id = len(os.listdir('cases/old'))
+
 
 
 def run_csmith(csmith: str) -> str:
@@ -175,6 +180,7 @@ class CSmithCaseGenerator:
         Returns:
             utils.Case: Intersting case.
         """
+        global case_id
         # Because the resulting code will be of csmith origin, we have to add
         # the csmith include path to all settings
         csmith_include_flag = f"-I{self.config.csmith.include_path}"
@@ -191,6 +197,10 @@ class CSmithCaseGenerator:
             
             print("CANDIDATE GENERATED: " + str(candidate_counter))
             candidate_counter += 1
+            old_interesting = False
+            new_interesting = False
+            compiler_old = True
+            compiler_new = True
             # Find alive markers
             
             logging.debug("Getting alive markers...")
@@ -257,14 +267,21 @@ class CSmithCaseGenerator:
                                     logging.info(
                                         f"Try {self.try_counter}: Found case! LENGTH: {len(candidate_code)}"
                                     )
-                                    return case
+                                    old_interesting = True
                             except builder.CompileError:
+                                compiler_old = False
                                 continue
             else:
                 logging.debug(
                     f"Try {self.try_counter}: Found no case. Onto the next one!"
                 )
+
+            # save candidate code
+            candidate_txt = open('cases/old/case_{}.txt'.format(case_id), 'w+')
+            candidate_txt.write(candidate_code)
+            candidate_txt.close()
             
+
             # Do the same thing for the modified version
             candidate_code = dc_inserter.entrance(candidate_code)
             logging.debug("Getting alive markers...")
@@ -333,13 +350,28 @@ class CSmithCaseGenerator:
                                     logging.info(
                                         f"Try {self.try_counter}: Found case! LENGTH: {len(candidate_code)}"
                                     )
-                                    return case
+                                    new_interesting = True
                             except builder.CompileError:
+                                compiler_new = False
                                 continue
             else:
                 logging.debug(
                     f"Try {self.try_counter}: Found no case. Onto the next one!"
                 )
+            # save candidate code
+            candidate_txt = open('cases/new/case_{}.txt'.format(case_id), 'w+')
+            candidate_txt.write(candidate_code)
+            candidate_txt.close()
+            case_interestingness = [case_id, old_interesting, new_interesting, old_interesting and new_interesting, compiler_old, compiler_new]
+            # write interestingness to .csv
+            with open('cases/data.csv', 'a', newline='') as csv_file:
+                writer_object = writer(csv_file)
+                if case_id == 0:
+                    fields = ["case_id", "old_interesting", "new_interesting", "old_and_new", "compiler_old", "compiler_new"]
+                    writer_object.writerow(fields)
+                writer_object.writerow(case_interestingness)  
+                csv_file.close()
+            case_id += 1
 
     def _wrapper_interesting(self, queue: Queue[str], scenario: utils.Scenario) -> None:
         """Wrapper for generate_interesting_case for easier use

@@ -1,0 +1,413 @@
+void DCEMarker0_(void);
+void DCEMarker1_(void);
+void DCEMarker2_(void);
+void DCEMarker3_(void);
+void DCEMarker4_(void);
+void DCEMarker5_(void);
+void DCEMarker6_(void);
+void DCEMarker7_(void);
+void DCEMarker8_(void);
+void DCEMarker9_(void);
+void DCEMarker10_(void);
+void DCEMarker11_(void);
+void DCEMarker12_(void);
+/*
+ * This is a RANDOMLY GENERATED PROGRAM.
+ *
+ * Generator: csmith 2.3.0
+ * Git version: 30dccd7
+ * Options:   --no-unions --safe-math --no-argc --no-volatiles
+ * --no-volatile-pointers --no-arrays --no-bitfields --no-checksum
+ * --no-comma-operators --no-compound-assignment --no-consts --no-divs
+ * --embedded-assigns --no-jumps --longlong --no-force-non-uniform-arrays
+ * --no-math64 --muls --no-packed-struct --no-paranoid --pointers --structs
+ * --inline-function --return-structs --arg-structs --dangling-global-pointers
+ * Seed:      201236001
+ */
+
+#include "csmith.h"
+
+static volatile uint32_t csmith_sink_ = 0;
+
+static long __undefined;
+
+/* --- Struct/Union Declarations --- */
+/* --- GLOBAL VARIABLES --- */
+static int32_t g_7 = 0x03629AA8L;
+static uint8_t g_21 = 7UL;
+static uint8_t g_33 = 0xDEL;
+static uint8_t *g_32 = &g_33;
+static int32_t g_41 = 0xF1BD53D2L;
+static int8_t g_55 = 0xBAL;
+static int32_t *g_81 = &g_41;
+static int32_t **g_80 = &g_81;
+static int8_t g_116 = 0x8AL;
+static uint32_t g_124 = 0xCF7A535AL;
+static uint16_t g_126 = 65535UL;
+static uint32_t *g_135 = &g_124;
+static uint32_t **g_134 = &g_135;
+static int16_t g_153 = 0x5791L;
+static uint32_t *g_155 = &g_124;
+static int8_t *g_160 = &g_116;
+static int8_t **g_159 = &g_160;
+static int8_t g_167 = (-3L);
+static int8_t g_170 = 0L;
+static uint32_t g_194 = 0xC775878EL;
+static uint16_t g_258 = 65534UL;
+static uint8_t *g_310 = &g_21;
+static int32_t g_322 = 0L;
+static uint8_t **g_328 = &g_32;
+static uint8_t ***g_327 = &g_328;
+static uint8_t ****g_326 = &g_327;
+
+
+/* --- FORWARD DECLARATIONS --- */
+static int8_t  func_1(void);
+inline static int32_t * func_2(int16_t  p_3, int32_t * p_4, int8_t  p_5);
+static int32_t * func_8(int32_t  p_9, int32_t * p_10, uint16_t  p_11);
+inline static int32_t * func_12(uint16_t  p_13, int32_t * p_14, int32_t * p_15, int8_t  p_16, int32_t  p_17);
+inline static int32_t * func_22(int32_t * p_23, int32_t * p_24, int32_t  p_25);
+static int32_t  func_26(uint16_t  p_27, uint32_t  p_28, uint8_t * p_29, uint8_t * p_30, int32_t * p_31);
+inline static uint16_t  func_48(int32_t  p_49, int32_t  p_50, int32_t * p_51, uint8_t  p_52, int8_t  p_53);
+inline static int32_t * func_58(int8_t * p_59, uint16_t  p_60);
+static uint32_t  func_69(int32_t * p_70);
+static int32_t * func_71(int8_t  p_72, int32_t * p_73, int32_t ** p_74, uint16_t  p_75);
+
+
+/* --- FUNCTIONS --- */
+/* ------------------------------------------ */
+/* 
+ * reads : g_7 g_32 g_33 g_41 g_80 g_170 g_159 g_160 g_155 g_124 g_55 g_167 g_81 g_258 g_153 g_322 g_326 g_134 g_135 g_21
+ * writes: g_21 g_33 g_41 g_55 g_81 g_126 g_160 g_310 g_167 g_7 g_322 g_153
+ */
+static int8_t  func_1(void)
+{ /* block id: 0 */
+    int32_t *l_6 = &g_7;
+    uint8_t *l_20 = &g_21;
+    uint16_t *l_291 = &g_126;
+    int32_t *l_321 = &g_322;
+    uint8_t **l_325 = &l_20;
+    uint8_t ***l_324 = &l_325;
+    uint8_t ****l_323 = &l_324;
+    int16_t *l_350 = &g_153;
+    (*g_80) = func_2(((*l_6) = ((l_6 == l_6) != (0x3EE32743L >= ((((*g_80) = func_8(g_7, func_12(((*l_291) = ((((*l_20) = (*l_6)) == ((((*g_80) = func_22(l_6, &g_7, func_26((g_7 < ((void*)0 != l_20)), g_7, g_32, l_20, l_6))) != (void*)0) < g_170)) | 0x69L)), l_6, &g_7, (*l_6), (*l_6)), g_124)) == &g_7) >= g_258)))), l_321, g_153);
+    if ((l_323 != g_326)) {
+      DCEMarker0_(); /* block id: 153 */
+      uint16_t l_331 = 0x5EB3L;
+      (*g_81) = (safe_mul_func_int16_t_s_s(l_331, (-1L)));
+    } else {
+      DCEMarker1_(); /* block id: 155 */
+      uint32_t *l_337 = (void *)0;
+      for (g_322 = 0; (g_322 < 24); ++g_322) {
+        DCEMarker2_(); /* block id: 158 */
+        int32_t l_334 = (-1L);
+        uint8_t l_342 = 0x7EL;
+        int32_t **l_343 = &l_6;
+        (*l_343) =
+            ((*g_80) = func_8(
+                 (0L | 1UL),
+                 func_58(
+                     ((*g_159) = (void *)0),
+                     ((*g_81) !=
+                      (l_334 != ((l_337 != (*g_134)) <=
+                                 ((safe_lshift_func_uint8_t_u_s(
+                                      (safe_sub_func_uint16_t_u_u(
+                                          0x6EC8L, ((l_334 == l_334) <= g_33))),
+                                      1)) >= 0x47L))))),
+                 l_342));
+      }
+      (*l_321) = 0x20C8D91BL;
+    }
+    (*g_80) = func_12((safe_sub_func_int32_t_s_s(0x005C3149L, (*l_6))), (*g_80), func_22(l_321, l_321, (*l_6)), ((safe_mod_func_int8_t_s_s((safe_add_func_int16_t_s_s((*l_6), ((*l_350) = ((*l_321) && g_41)))), (*l_6))) && 0xAEBFL), g_21);
+    (*l_321) = g_170;
+    return (*l_6);
+}
+
+
+/* ------------------------------------------ */
+/* 
+ * reads : g_322 g_81
+ * writes: g_7
+ */
+inline static int32_t * func_2(int16_t  p_3, int32_t * p_4, int8_t  p_5)
+{ /* block id: 149 */
+    (*g_81) = (*p_4);
+    return p_4;
+}
+
+
+/* ------------------------------------------ */
+/* 
+ * reads : g_167 g_80 g_81
+ * writes: g_167
+ */
+static int32_t * func_8(int32_t  p_9, int32_t * p_10, uint16_t  p_11)
+{ /* block id: 135 */
+    uint32_t l_317 = 18446744073709551606UL;
+    int32_t l_318 = 1L;
+    l_318 = l_317;
+    if (l_318) {
+      DCEMarker3_(); /* block id: 137 */
+      for (g_167 = 0; (g_167 <= (-5));
+           g_167 = safe_sub_func_int32_t_s_s(g_167, 4)) {
+        DCEMarker6_(); /* block id: 140 */
+        return (*g_80);
+      }
+      DCEMarker7_();
+      return (*g_80);
+    } else {
+      DCEMarker4_(); /* block id: 144 */
+      return (*g_80);
+    }
+    DCEMarker5_();
+}
+
+
+/* ------------------------------------------ */
+/* 
+ * reads : g_159 g_160 g_155 g_124 g_55 g_32 g_7 g_80 g_322
+ * writes: g_160 g_33 g_310 g_126 g_81
+ */
+inline static int32_t * func_12(uint16_t  p_13, int32_t * p_14, int32_t * p_15, int8_t  p_16, int32_t  p_17)
+{ /* block id: 124 */
+    uint32_t l_298 = 0UL;
+    int16_t l_309 = (-4L);
+    uint8_t *l_311 = &g_21;
+    uint8_t **l_312 = (void*)0;
+    uint8_t *l_313 = &g_21;
+    uint8_t *l_315 = &g_21;
+    uint8_t **l_314 = &l_315;
+    uint16_t *l_316 = &g_126;
+    (*g_80) = func_58(((*g_159) = (*g_159)), ((*l_316) = (safe_mul_func_int16_t_s_s((((safe_sub_func_uint16_t_u_u((((*g_155) > (safe_rshift_func_uint16_t_u_u(g_55, l_298))) >= ((*g_32) = l_298)), (safe_sub_func_int32_t_s_s((safe_mod_func_uint32_t_u_u((safe_sub_func_uint32_t_u_u(((((safe_mod_func_int8_t_s_s((safe_rshift_func_int16_t_s_s(((l_309 = l_298) > p_13), (((l_311 = (g_310 = (void*)0)) != ((*l_314) = (l_313 = &g_21))) <= l_298))), l_298)) && 0x5E7A7593L) >= 0x79L) >= (*p_14)), l_298)), l_298)), 0x0BE7D7A5L)))) < 4294967295UL) <= p_16), l_298))));
+    return p_15;
+}
+
+
+/* ------------------------------------------ */
+/* 
+ * reads :
+ * writes:
+ */
+inline static int32_t * func_22(int32_t * p_23, int32_t * p_24, int32_t  p_25)
+{ /* block id: 18 */
+    int32_t l_65 = 0x30AE734FL;
+    uint8_t l_78 = 0xB9L;
+    int32_t l_79 = 0x1D8D4885L;
+    uint16_t *l_128 = &g_126;
+    int32_t *l_171 = &g_41;
+    int32_t l_208 = 0xBA7A0367L;
+    uint32_t **l_249 = &g_155;
+    int32_t **l_250 = (void*)0;
+    int32_t **l_251 = &l_171;
+    uint8_t l_272 = 0x60L;
+    uint8_t **l_276 = (void*)0;
+    uint8_t ***l_275 = &l_276;
+    uint32_t l_289 = 0x8E14EFA4L;
+    int32_t *l_290 = (void*)0;
+    for (p_25 = 0; (p_25 < 29); p_25 = safe_add_func_uint16_t_u_u(p_25, 3)) {
+      DCEMarker8_(); /* block id: 21 */
+      int8_t *l_62 = &g_55;
+      int8_t **l_61 = &l_62;
+      int32_t *l_68 = &g_41;
+      int32_t **l_67 = &l_68;
+      int8_t *l_76 = &g_55;
+      uint32_t **l_132 = (void *)0;
+      uint8_t **l_279 = &g_32;
+      (*l_67) = func_58(((*l_61) = (void *)0),
+                        (safe_sub_func_int8_t_s_s((l_65 ^ 0xCE33A902L), l_65)));
+    }
+    return l_290;
+}
+
+
+/* ------------------------------------------ */
+/* 
+ * reads : g_33 g_41 g_32 g_7
+ * writes: g_33 g_41 g_55
+ */
+static int32_t  func_26(uint16_t  p_27, uint32_t  p_28, uint8_t * p_29, uint8_t * p_30, int32_t * p_31)
+{ /* block id: 2 */
+    int32_t l_39 = (-1L);
+    for (g_33 = 0; (g_33 > 50); g_33 = safe_add_func_uint8_t_u_u(g_33, 3)) {
+      DCEMarker9_(); /* block id: 5 */
+      int32_t *l_40 = &g_41;
+      int8_t *l_54 = &g_55;
+      for (p_27 = 0; (p_27 <= 9); p_27++) {
+        DCEMarker11_(); /* block id: 8 */
+        int16_t l_38 = 1L;
+        return l_38;
+      }
+      DCEMarker12_();
+      (*l_40) = l_39;
+      (*l_40) = (safe_mod_func_int8_t_s_s(
+          0x26L,
+          ((safe_lshift_func_int8_t_s_s(
+               ((*l_54) = (safe_lshift_func_int8_t_s_u(
+                    (g_33 ^ func_48(p_28, (*l_40), &g_41, (*g_32), (*l_40))),
+                    1))),
+               0)) &
+           0xE5F88592L)));
+    }
+    DCEMarker10_();
+    return g_7;
+}
+
+
+/* ------------------------------------------ */
+/* 
+ * reads :
+ * writes:
+ */
+inline static uint16_t  func_48(int32_t  p_49, int32_t  p_50, int32_t * p_51, uint8_t  p_52, int8_t  p_53)
+{ /* block id: 12 */
+    return p_49;
+}
+
+
+/* ------------------------------------------ */
+/* 
+ * reads :
+ * writes:
+ */
+inline static int32_t * func_58(int8_t * p_59, uint16_t  p_60)
+{ /* block id: 23 */
+    int32_t *l_66 = &g_7;
+    return l_66;
+}
+
+
+/* ------------------------------------------ */
+/* 
+ * reads : g_80 g_81 g_41 g_55 g_32 g_33 g_7
+ * writes: g_41 g_81 g_116 g_33 g_126
+ */
+static uint32_t  func_69(int32_t * p_70)
+{ /* block id: 33 */
+    uint32_t l_95 = 4294967295UL;
+    int32_t **l_98 = &g_81;
+    int32_t *l_99 = &g_7;
+    uint32_t *l_104 = &l_95;
+    int32_t l_107 = 0x14755041L;
+    int8_t *l_115 = &g_116;
+    int8_t *l_121 = &g_55;
+    uint32_t *l_123 = &g_124;
+    uint32_t **l_122 = &l_123;
+    uint16_t *l_125 = &g_126;
+    int32_t **l_127 = &l_99;
+    (*p_70) = (((*g_80) == (void*)0) && ((safe_sub_func_int16_t_s_s((((*l_98) = func_71(l_95, func_71((255UL > ((**g_80) & (safe_rshift_func_int16_t_s_u(g_55, 3)))), p_70, l_98, (**l_98)), &g_81, g_7)) == l_99), (*l_99))) > 1L));
+    (*l_127) = ((*l_98) = func_58(&g_55, ((*l_125) = ((safe_rshift_func_uint16_t_u_u((safe_add_func_uint32_t_u_u(((*l_99) == (g_55 | ((*l_104) = g_41))), (safe_rshift_func_uint8_t_u_s(l_107, (!(safe_sub_func_int16_t_s_s(((((-2L) & (safe_lshift_func_int16_t_s_u((safe_sub_func_int8_t_s_s(((*l_115) = 0x13L), ((*g_32) = (safe_sub_func_int8_t_s_s(((safe_mod_func_int32_t_s_s((((*l_122) = func_58(l_121, g_41)) == &g_124), (**l_98))) ^ (*l_99)), 0xFDL))))), 1))) == (*p_70)) > 0xCDL), (*l_99)))))))), 0)) | g_41))));
+    return (**l_127);
+}
+
+
+/* ------------------------------------------ */
+/* 
+ * reads : g_81 g_32 g_33 g_80
+ * writes: g_41
+ */
+static int32_t * func_71(int8_t  p_72, int32_t * p_73, int32_t ** p_74, uint16_t  p_75)
+{ /* block id: 30 */
+    uint8_t l_86 = 0xD0L;
+    int16_t l_90 = 0xEEFDL;
+    uint8_t l_92 = 255UL;
+    (**g_80) = (safe_sub_func_uint16_t_u_u(((safe_mul_func_int8_t_s_s(l_86, ((*p_74) != (void*)0))) < p_75), (safe_mul_func_uint8_t_u_u((~((((((*g_32) >= (((8UL ^ (l_90 > p_75)) == (+(6UL && l_92))) & g_33)) != p_72) | 0xF0819D5AL) >= l_92) != l_92)), p_75))));
+    return (*p_74);
+}
+
+
+
+
+/* ---------------------------------------- */
+int main (void)
+{
+    int print_hash_value = 0;
+    platform_main_begin();
+    func_1();
+    csmith_sink_ = g_7;
+    csmith_sink_ = g_21;
+    csmith_sink_ = g_33;
+    csmith_sink_ = g_41;
+    csmith_sink_ = g_55;
+    csmith_sink_ = g_116;
+    csmith_sink_ = g_124;
+    csmith_sink_ = g_126;
+    csmith_sink_ = g_153;
+    csmith_sink_ = g_167;
+    csmith_sink_ = g_170;
+    csmith_sink_ = g_194;
+    csmith_sink_ = g_258;
+    csmith_sink_ = g_322;
+    platform_main_end(0,0);
+    return 0;
+}
+
+/************************ statistics *************************
+XXX max struct depth: 0
+breakdown:
+   depth: 0, occurrence: 63
+XXX total union variables: 0
+
+XXX max expression depth: 36
+breakdown:
+   depth: 1, occurrence: 34
+   depth: 2, occurrence: 7
+   depth: 6, occurrence: 1
+   depth: 12, occurrence: 1
+   depth: 15, occurrence: 1
+   depth: 16, occurrence: 1
+   depth: 18, occurrence: 2
+   depth: 27, occurrence: 1
+   depth: 29, occurrence: 1
+   depth: 36, occurrence: 1
+
+XXX total number of pointers: 104
+
+XXX times a variable address is taken: 96
+XXX times a pointer is dereferenced on RHS: 65
+breakdown:
+   depth: 1, occurrence: 55
+   depth: 2, occurrence: 10
+XXX times a pointer is dereferenced on LHS: 79
+breakdown:
+   depth: 1, occurrence: 72
+   depth: 2, occurrence: 7
+XXX times a pointer is compared with null: 9
+XXX times a pointer is compared with address of another variable: 4
+XXX times a pointer is compared with another pointer: 7
+XXX times a pointer is qualified to be dereferenced: 310
+
+XXX max dereference level: 2
+breakdown:
+   level: 0, occurrence: 0
+   level: 1, occurrence: 203
+   level: 2, occurrence: 65
+XXX number of pointers point to pointers: 37
+XXX number of pointers point to scalars: 67
+XXX number of pointers point to structs: 0
+XXX percent of pointers has null in alias set: 26.9
+XXX average alias set size: 1.19
+
+XXX times a non-volatile is read: 321
+XXX times a non-volatile is write: 192
+XXX times a volatile is read: 0
+XXX    times read thru a pointer: 0
+XXX times a volatile is write: 0
+XXX    times written thru a pointer: 0
+XXX times a volatile is available for access: 0
+XXX percentage of non-volatile access: 100
+
+XXX forward jumps: 0
+XXX backward jumps: 0
+
+XXX stmts: 35
+XXX max block depth: 2
+breakdown:
+   depth: 0, occurrence: 22
+   depth: 1, occurrence: 10
+   depth: 2, occurrence: 3
+
+XXX percentage a fresh-made variable is used: 17.9
+XXX percentage an existing variable is used: 82.1
+********************* end of statistics **********************/
+
+
