@@ -277,9 +277,10 @@ class CSmithCaseGenerator:
                 )
 
             # save candidate code
-            candidate_txt = open('cases/old/case_{}.txt'.format(case_id), 'w+')
-            candidate_txt.write(candidate_code)
-            candidate_txt.close()
+            if old_interesting:   
+                candidate_txt = open('cases/old/case_{}.txt'.format(case_id), 'w+')
+                candidate_txt.write(candidate_code)
+                candidate_txt.close()
             
 
             # Do the same thing for the modified version
@@ -359,9 +360,10 @@ class CSmithCaseGenerator:
                     f"Try {self.try_counter}: Found no case. Onto the next one!"
                 )
             # save candidate code
-            candidate_txt = open('cases/new/case_{}.txt'.format(case_id), 'w+')
-            candidate_txt.write(candidate_code)
-            candidate_txt.close()
+            if new_interesting:
+                candidate_txt = open('cases/new/case_{}.txt'.format(case_id), 'w+')
+                candidate_txt.write(candidate_code)
+                candidate_txt.close()
             case_interestingness = [case_id, old_interesting, new_interesting, old_interesting and new_interesting, compiler_old, compiler_new]
             # write interestingness to .csv
             with open('cases/data.csv', 'a', newline='') as csv_file:
