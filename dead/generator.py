@@ -27,7 +27,12 @@ if TYPE_CHECKING:
     from patchdatabase import PatchDB
 
 # global variables
-case_id = len(os.listdir('cases/old'))
+def get_case_id():
+    rows = 0
+    with open("cases/data.csv") as f:
+        rows = sum(1 for row in f)
+    return rows - 1 
+
 
 
 
@@ -180,7 +185,10 @@ class CSmithCaseGenerator:
         Returns:
             utils.Case: Intersting case.
         """
-        global case_id
+        case_id = get_case_id()
+        if(case_id < 0):
+            case_id = 0
+
         # Because the resulting code will be of csmith origin, we have to add
         # the csmith include path to all settings
         csmith_include_flag = f"-I{self.config.csmith.include_path}"
