@@ -110,7 +110,7 @@ def precompute(candidate_code):
     new_candidate.close()
     # complete gdb_commands to automatically run and log the program. \ninfo locals
 
-    gdb_commands = gdb_commands + "set logging file gdb_log.txt\nset logging on\nr\nwhile 1\ns" + gdb_global + "\ncontinue\nend"
+    gdb_commands = gdb_commands + "set logging file gdb_log.txt\nset logging on\nr\nwhile 1\ns\ninfo locals" + gdb_global + "\ncontinue\nend"
 
     # store gdb_commands as .txt file to run in a gdb session
     command_file = open('tmp/command_file.txt', 'w+')
@@ -154,7 +154,8 @@ def eval_log(global_variables):
                     global_number = var[1:]
                     global_number = (int(global_number) - 1) % global_count
                     var = global_variables[global_number]
-                elif not (var in local_var_list):
+                # check if var is a local variable (starts with l_)
+                elif var[0] == 'l':
                     local_var_list.append(var)
                 
                 # add new variable to dictionary
@@ -223,7 +224,7 @@ def entrance(candidate_code):
     var_vals, local_var_list = eval_log(global_variables)
     conditions = unsatConditionGenerator(var_vals)
     new_candidate = instrument_code(conditions, candidate_code)
-    # new_candidate = set_locals(local_var_list, new_candidate)
+    new_candidate = set_locals(local_var_list, new_candidate)
     return new_candidate
     
 
@@ -238,7 +239,7 @@ def main():
     var_vals, local_var_list = eval_log(global_variables)
     conditions = unsatConditionGenerator(var_vals)
     new_candidate = instrument_code(conditions, candidate_code)
-    # new_candidate = set_locals(local_var_list, new_candidate)
+    new_candidate = set_locals(local_var_list, new_candidate)
     global_variables = precompute(new_candidate)
     new_program_txt = open('tmp/candidate_new.txt', 'w+')
     new_program_txt.write(new_candidate)
