@@ -34,38 +34,36 @@ break DCEMarker32_
 break DCEMarker33_
 break DCEMarker34_
 break DCEMarker35_
+break DCEMarker36_
 set logging file gdb_log.txt
 set logging on
 r
 while 1
 s
 info locals
-print g_7
-print g_33
-print g_41
-print g_49
-print g_72
-print g_90
-print g_96
-print g_112
-print g_119
-print g_125
-print g_146
-print g_147
-print g_160
-print g_164
-print g_170
-print g_192
-print g_194
-print g_216
-print g_291
-print g_297
-print g_367
-print g_395
-print g_420
-print g_456
-print g_505
-print g_593
-print g_604
+print g_24
+print g_71
+print g_74
+print g_75[10][3][3]
+print g_76[3]
+print g_77
+print g_84
+print g_89
+print g_92[8]
+print g_95
+print g_96[10]
+print g_97[7]
+print g_127
+print g_128[3]
+print g_189
+print g_280
+print g_305
+print g_329
+print g_330
+print g_331
+print g_332
+print g_333
+print g_334
+print g_335
 continue
 end

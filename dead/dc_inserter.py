@@ -48,7 +48,7 @@ def get_global(candidate_code):
             tokens = code_line.split()
             if not (tokens == []) and not (tokens[2] == "GLOBAL"):
                 # check that variable is not a pointer
-                if(not (tokens[2][0] == "*")):
+                if(not (tokens[2][0] == "*" or tokens[2][0] != "g")):
                     # add to the variables list
                     global_variables.append(tokens[2])
     
@@ -200,14 +200,31 @@ def unsatConditionGenerator(var_vals):
     # return generated conditions
     return conditions
 
+# create a new marker with the next possible index. it fills up missing indices
+def get_new_marker(code):
+    counter = 0
+    index = code.find("void DCEMarker{}_(void);".format(counter))
+    old_index = 0
+    while(not -1 == index):
+        old_index = index
+        counter += 1
+        index = code.find("void DCEMarker{}_(void);".format(counter))
+    new_marker = "void DCEMarker{}_(void);\n".format(counter)
+    new_marker_call = "DCEMarker{}_();".format(counter)
+    code = code[:old_index] + new_marker + code[old_index:]
+    return code, new_marker_call
+    
+# put if-statements around markers
 def instrument_code(conditions, code):
     print("INSTRUMENT CODE")
     # iterate through each marker with its unsat condition
     for marker, condition in conditions.items():
         # look for the maker call
         marker_call = marker + "();"
+        # get new marker
+        code, new_marker_call = get_new_marker(code)
         # create replacement code for the marker call (one line)
-        replacement = "if (" + condition + "){" + marker_call + "}"
+        replacement = "if (" + condition + "){" + marker_call + "} " + new_marker_call
         # replace the marker call with replacement putting it into dead code
         code = code.replace(marker_call, replacement)
     print("CODE INSTRUMENTED")
@@ -240,10 +257,10 @@ def main():
     conditions = unsatConditionGenerator(var_vals)
     new_candidate = instrument_code(conditions, candidate_code)
     new_candidate = set_locals(local_var_list, new_candidate)
-    global_variables = precompute(new_candidate)
     new_program_txt = open('tmp/candidate_new.txt', 'w+')
     new_program_txt.write(new_candidate)
     new_program_txt.close()
+    
     
 
 if __name__ == "__main__":
