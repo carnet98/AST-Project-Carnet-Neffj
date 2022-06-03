@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import json
 import logging
-import os
+import os, os.path
 import signal
 import subprocess
 from multiprocessing import Process, Queue
@@ -20,8 +20,20 @@ import parsers
 import patchdatabase
 import utils
 
+import dc_inserter
+from csv import writer
+
 if TYPE_CHECKING:
     from patchdatabase import PatchDB
+
+# global variables
+def get_case_id():
+    rows = 0
+    with open("cases/data.csv") as f:
+        rows = sum(1 for row in f)
+    return rows - 1 
+
+
 
 
 def run_csmith(csmith: str) -> str:
@@ -173,18 +185,32 @@ class CSmithCaseGenerator:
         Returns:
             utils.Case: Intersting case.
         """
+        case_id = get_case_id()
+        if(case_id < 0):
+            case_id = 0
+
         # Because the resulting code will be of csmith origin, we have to add
         # the csmith include path to all settings
         csmith_include_flag = f"-I{self.config.csmith.include_path}"
         scenario.add_flags([csmith_include_flag])
-
+        candidate_counter = 0
         self.try_counter = 0
         while True:
             self.try_counter += 1
             logging.debug("Generating new candidate...")
             marker_prefix, candidate_code = generate_file(self.config, "")
-
+            ###################################
+            # TODO: Insert the Extension here #
+            ###################################
+            
+            print("CANDIDATE GENERATED: " + str(candidate_counter))
+            candidate_counter += 1
+            old_interesting = False
+            new_interesting = False
+            compiler_old = True
+            compiler_new = True
             # Find alive markers
+            
             logging.debug("Getting alive markers...")
             try:
                 target_alive_marker_list = [
@@ -249,13 +275,115 @@ class CSmithCaseGenerator:
                                     logging.info(
                                         f"Try {self.try_counter}: Found case! LENGTH: {len(candidate_code)}"
                                     )
-                                    return case
+                                    old_interesting = True
                             except builder.CompileError:
+                                compiler_old = False
                                 continue
             else:
                 logging.debug(
                     f"Try {self.try_counter}: Found no case. Onto the next one!"
                 )
+
+            # save candidate code
+            if old_interesting:   
+                candidate_txt = open('cases/old/case_{}.txt'.format(case_id), 'w+')
+                candidate_txt.write(candidate_code)
+                candidate_txt.close()
+            
+
+            # Do the same thing for the modified version
+            candidate_code = dc_inserter.entrance(candidate_code)
+            logging.debug("Getting alive markers...")
+            try:
+                target_alive_marker_list = [
+                    (
+                        tt,
+                        builder.find_alive_markers(
+                            candidate_code, tt, marker_prefix, self.builder
+                        ),
+                    )
+                    for tt in scenario.target_settings
+                ]
+
+                tester_alive_marker_list = [
+                    (
+                        tt,
+                        builder.find_alive_markers(
+                            candidate_code, tt, marker_prefix, self.builder
+                        ),
+                    )
+                    for tt in scenario.attacker_settings
+                ]
+            except builder.CompileError:
+                print("COMPILER ERROR")
+                print(builder.CompileError)
+                continue
+
+            target_alive_markers = set()
+            for _, marker_set in target_alive_marker_list:
+                target_alive_markers.update(marker_set)
+
+            # Extract reduce cases
+            logging.debug("Extracting reduce cases...")
+            for marker in target_alive_markers:
+                good: list[utils.CompilerSetting] = []
+                for good_setting, good_alive_markers in tester_alive_marker_list:
+                    if (
+                        marker not in good_alive_markers
+                    ):  # i.e. the setting eliminated the call
+                        good.append(good_setting)
+
+                # Find bad cases
+                if len(good) > 0:
+                    good_opt_levels = [gs.opt_level for gs in good]
+                    for bad_setting, bad_alive_markers in target_alive_marker_list:
+                        # XXX: Here you can enable inter-opt_level comparison!
+                        if (
+                            marker in bad_alive_markers
+                            and bad_setting.opt_level in good_opt_levels
+                        ):  # i.e. the setting didn't eliminate the call
+                            # Create reduce case
+                            case = utils.Case(
+                                code=candidate_code,
+                                marker=marker,
+                                bad_setting=bad_setting,
+                                good_settings=good,
+                                scenario=scenario,
+                                reduced_code=None,
+                                bisection=None,
+                                path=None,
+                            )
+                            # TODO: Optimize interestingness test and document behaviour
+                            try:
+                                if self.chkr.is_interesting(case):
+                                    logging.info(
+                                        f"Try {self.try_counter}: Found case! LENGTH: {len(candidate_code)}"
+                                    )
+                                    new_interesting = True
+                            except builder.CompileError:
+                                compiler_new = False
+                                continue
+            else:
+                logging.debug(
+                    f"Try {self.try_counter}: Found no case. Onto the next one!"
+                )
+            # save candidate code
+            if new_interesting:
+                candidate_txt = open('cases/new/case_{}.txt'.format(case_id), 'w+')
+                candidate_txt.write(candidate_code)
+                candidate_txt.close()
+            case_interestingness = [case_id, old_interesting, new_interesting, old_interesting and new_interesting, compiler_old, compiler_new]
+            # write interestingness to .csv
+            with open('cases/data.csv', 'a', newline='') as csv_file:
+                writer_object = writer(csv_file)
+                if case_id == 0:
+                    fields = ["case_id", "old_interesting", "new_interesting", "old_and_new", "compiler_old", "compiler_new"]
+                    writer_object.writerow(fields)
+                writer_object.writerow(case_interestingness)  
+                csv_file.close()
+            case_id += 1
+            if case_id > 5000:
+                return
 
     def _wrapper_interesting(self, queue: Queue[str], scenario: utils.Scenario) -> None:
         """Wrapper for generate_interesting_case for easier use
@@ -440,7 +568,9 @@ if __name__ == "__main__":
                     print(next(gen))
 
         else:
-            print(case_generator.generate_interesting_case(scenario))
+            amount_cases = args.amount if args.amount is not None else 0
+            for i in range(amount_cases):
+                print(case_generator.generate_interesting_case(scenario))
     else:
         # TODO
         print("Not implemented yet")
