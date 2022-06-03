@@ -63,45 +63,39 @@ break DCEMarker61_
 break DCEMarker62_
 break DCEMarker63_
 break DCEMarker64_
-break DCEMarker65_
-break DCEMarker66_
-break DCEMarker67_
-break DCEMarker68_
-break DCEMarker69_
 set logging file gdb_log.txt
 set logging on
 r
 while 1
 s
-print g_2
-print g_5
-print g_78
-print g_94
-print g_95
-print g_152
-print g_153
-print g_154
-print g_155
-print g_156
-print g_165
-print g_179
-print g_182
-print g_194
-print g_244
-print g_326
-print g_335
-print g_410
-print g_433
-print g_479
-print g_492
-print g_501
-print g_502
-print g_844
-print g_869
-print g_1079
-print g_1128
-print g_1150
-print g_1184
-print g_1196
+print g_11
+print g_96
+print g_99
+print g_102
+print g_131
+print g_134
+print g_135
+print g_143
+print g_197
+print g_203
+print g_205
+print g_346
+print g_347
+print g_388
+print g_396
+print g_403
+print g_430
+print g_431
+print g_459
+print g_554
+print g_556
+print g_564
+print g_565
+print g_593
+print g_594
+print g_678
+print g_813
+print g_878
+print g_890
 continue
 end
