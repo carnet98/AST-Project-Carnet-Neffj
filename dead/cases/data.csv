@@ -1,0 +1,5 @@
+case_id,old_interesting,new_interesting,old_and_new,compiler_old,compiler_new
+0,False,False,False,True,True
+1,False,False,False,True,True
+2,False,False,False,True,True
+3,False,False,False,True,True

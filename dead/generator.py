@@ -382,8 +382,6 @@ class CSmithCaseGenerator:
                 writer_object.writerow(case_interestingness)  
                 csv_file.close()
             case_id += 1
-            if case_id > 5000:
-                return
 
     def _wrapper_interesting(self, queue: Queue[str], scenario: utils.Scenario) -> None:
         """Wrapper for generate_interesting_case for easier use
