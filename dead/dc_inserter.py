@@ -15,7 +15,7 @@ uint64_range = {'min': 0, 'max': 18446744073709551615}
 int64_range = {'min': -9223372036854775808, 'max': 9223372036854775807}
 ranges = [int8_range, uint8_range, int16_range, uint16_range, int32_range, uint32_range, int64_range, uint64_range]
 '''
-
+# Get range of variable values depending on possible types
 max_vals = [127, 255, 32767, 65535, 2147483647, 4294967295, 9223372036854775807, 18446744073709551615]
 min_vals = [0, -128, -32768, -2147483648, -9223372036854775808]
 
@@ -25,10 +25,6 @@ def get_range(min_val, max_val):
     r['min'] = max([x for x in min_vals if min_val >= x], default=127)
     return r
             
-        
-    
-
-
 # get a list of all global variables and generate GDB commands to get values
 def get_global(candidate_code):
     print("GET GLOBAL VARIABLE INFO")
@@ -79,9 +75,6 @@ def set_locals(local_var_list, candidate_code):
             new_candidate = new_candidate + code_line + "\n"
 
     return(new_candidate)
-            
-
-
 
 # take code. transform to compile ready. keep track of DCEMarkers
 # PRECONDITION: The markers are numbered continuously
@@ -108,23 +101,20 @@ def precompute(candidate_code):
     new_candidate = open('tmp/candidate.c', 'w+')
     new_candidate.write(candidate_code)
     new_candidate.close()
-    # complete gdb_commands to automatically run and log the program. \ninfo locals
-
+    # complete gdb_commands to automatically run and log the program. \ninfo locals ommitted for only global variable use
     gdb_commands = gdb_commands + "set logging file gdb_log.txt\nset logging on\nr\nwhile 1\ns" + gdb_global + "\ncontinue\nend"
-
     # store gdb_commands as .txt file to run in a gdb session
     command_file = open('tmp/command_file.txt', 'w+')
     command_file.write(gdb_commands)
     command_file.close()
     return global_variables
-    
 
-
+# run gdb_script.sh
 def run_gdb():
     print("COMPILE AND EXECUTE GDB AND GET LOCAL VARIABLE INFO")
     os.system("./gdb_script.sh")
 
-
+# evaluate gdb log file
 def eval_log(global_variables):
     print("START: EVALUTATE LOG FILE")
     global_count = len(global_variables)
@@ -167,13 +157,11 @@ def eval_log(global_variables):
                     if not (val in var_vals[curr_break][var]):
                         var_vals[curr_break][var].append(val)
                 except ValueError:
-                    print("VALUE ERROR")
-                
-                
+                    print("VALUE ERROR")                
     print("END: EVALUATED LOG FILE")
     return var_vals, local_var_list
     
-    
+# generates a unsat condition 
 def unsatConditionGenerator(var_vals):
     print("GENERATE UNSATISFIABLE CONDITION WITH HELP OF VARIABLE VALUES")
     conditions = {}
@@ -195,7 +183,6 @@ def unsatConditionGenerator(var_vals):
                     conditions[marker] = str(new_var) + " == " + var
                 else:
                     conditions[marker] = conditions[marker] + " || " + str(new_var) + " == " + var
-
     print("CONDITION GENERATED")
     # return generated conditions
     return conditions
@@ -244,8 +231,6 @@ def entrance(candidate_code):
     # new_candidate = set_locals(local_var_list, new_candidate)
     return new_candidate
     
-
-
 # enter program standalone
 def main():
     text_file = open("tmp/candidate.txt", "r")
@@ -261,8 +246,6 @@ def main():
     new_program_txt.write(new_candidate)
     new_program_txt.close()
     
-    
-
 if __name__ == "__main__":
     main()
 
