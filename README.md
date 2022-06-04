@@ -3,7 +3,7 @@
 This is a project done for the Automated Software Testing course at ETH Zürich.
 
 ## Abstract
-here will be the abstract
+Missed compiler optimizations reveal performance bugs in compilers. Using dead code elimination (DCE) Theodoridis et al. [  8] were able to detect performance bugs by inserting "optimization markers" into randomly generated C programs and compiling them with different versions and options. In this paper we extend this approach by inserting dead code into the programs by adding unsatisfiable if-statements. We performed different experiments with variations of our method. Each experiment either adds additional markers to each basic block and/or keeps track of local and global or only global variables only. With each experiment we were able to detect interesting  cases which  dead  was not able to. In one particular experiment our approach was able to detect 33% more cases than  dead. We hope our extension leads to a better understanding in the analysis of DCE.
 ## Documentation
 The implementation computes the cases that gave the best results in the evaluation. Our tool extends [dead](https://github.com/DeadCodeProductions/dead) with a `dc_inserter` file that inserts dead code into programs to generate more interesting cases.
 ### Getting Started

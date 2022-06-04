@@ -1,3 +1,0 @@
-dead tool git repo: https://github.com/DeadCodeProductions/dead 
-CSmith Doc: https://embed.cs.utah.edu/csmith/
-C-reduce Doc: https://embed.cs.utah.edu/creduce/
